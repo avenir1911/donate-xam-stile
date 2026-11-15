@@ -1,8 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { spiritualAudio } from '@/lib/audio';
+
+const COOLDOWN_MS = 2000;       // 2 giây giữa các lần click
+const DAILY_LIMIT = 50;         // Tối đa 50 lần/ngày
+const STORAGE_KEY = 'xam_candle';
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+}
+
+function getDailyCount(): number {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return 0;
+    const { date, count } = JSON.parse(raw);
+    if (date !== getTodayKey()) return 0;
+    return count as number;
+  } catch { return 0; }
+}
+
+function incrementDailyCount(): number {
+  const count = getDailyCount() + 1;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: getTodayKey(), count }));
+  return count;
+}
 
 const BLESSING_WORDS = [
   '+1 Can Đảm',
@@ -24,8 +48,34 @@ interface FloatingWoodenFishProps {
 export default function FloatingWoodenFish({ meritPoints, onIncrementMerit }: FloatingWoodenFishProps) {
   const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; x: number }[]>([]);
   const [isKnocking, setIsKnocking] = useState(false);
+  const [cooldownMsg, setCooldownMsg] = useState('');
+  const lastClickRef = useRef<number>(0);
+
+  // Hiển thị thông báo cooldown tạm thời
+  const showCooldown = (msg: string) => {
+    setCooldownMsg(msg);
+    setTimeout(() => setCooldownMsg(''), 1200);
+  };
 
   const handleClick = (e: React.MouseEvent) => {
+    const now = Date.now();
+
+    // Kiểm tra cooldown
+    if (now - lastClickRef.current < COOLDOWN_MS) {
+      showCooldown('⏳ Bình tĩnh...');
+      return;
+    }
+
+    // Kiểm tra giới hạn ngày
+    const dailyCount = getDailyCount();
+    if (dailyCount >= DAILY_LIMIT) {
+      showCooldown('🕯️ Đủ rồi hôm nay!');
+      return;
+    }
+
+    lastClickRef.current = now;
+    incrementDailyCount();
+
     spiritualAudio.playWoodenFish();
     onIncrementMerit();
 
@@ -58,6 +108,16 @@ export default function FloatingWoodenFish({ meritPoints, onIncrementMerit }: Fl
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center select-none">
+      {/* Thông báo cooldown */}
+      {cooldownMsg && (
+        <div
+          className="absolute bottom-20 font-serif font-bold text-yellow-400 text-xs whitespace-nowrap text-center pointer-events-none"
+          style={{ textShadow: '0 0 8px rgba(234,179,8,0.9)', animation: 'floatUp 1.2s ease-out forwards' }}
+        >
+          {cooldownMsg}
+        </div>
+      )}
+
       {/* Các chữ bay lên */}
       <div className="relative w-full pointer-events-none">
         {floatingTexts.map((item) => (
