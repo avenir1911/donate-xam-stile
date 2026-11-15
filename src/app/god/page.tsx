@@ -151,21 +151,29 @@ export default function GodAdminPage() {
       const res = await fetch(`/api/donors/${id}`, { method: 'DELETE' });
       if (res.ok) {
         showNotification(`Đã xoá ${name}!`);
-        loadData();
+        setDonors((prev) => prev.filter((d) => d.id !== id));
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(errData.error || 'Không thể xoá!');
       }
     } catch (err) {
       console.error('Lỗi xoá:', err);
+      alert('Không thể kết nối đến máy chủ!');
     }
   };
 
   const handleToggleHide = async (donor: Donor) => {
     try {
+      const newHiddenState = !donor.hidden;
+      setDonors((prev) =>
+        prev.map((d) => (d.id === donor.id ? { ...d, hidden: newHiddenState } : d))
+      );
       await fetch(`/api/donors/${donor.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ hidden: !donor.hidden }),
+        body: JSON.stringify({ hidden: newHiddenState }),
       });
-      loadData();
+      showNotification(`Đã ${newHiddenState ? 'ẩn' : 'hiển thị'} ${donor.name}`);
     } catch (err) {
       console.error('Lỗi ẩn/hiện:', err);
     }
@@ -490,10 +498,29 @@ export default function GodAdminPage() {
 
             {/* Bảng Danh Sách */}
             <div className="bg-horror-card border border-zinc-800 rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-4 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
+              <div className="p-4 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between flex-wrap gap-2">
                 <h3 className="font-bold text-red-400 text-sm">
                   <span>Toàn Bộ Danh Sách Sổ Xám Stile ({donors.length})</span>
                 </h3>
+
+                {/* Nút Backup / Export JSON */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      const blob = new Blob([JSON.stringify(donors, null, 2)], { type: 'application/json' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `donors-backup-${new Date().toISOString().split('T')[0]}.json`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-700 hover:border-red-500 text-zinc-300 hover:text-white text-[11px] transition"
+                    title="Tải bản sao lưu JSON về máy"
+                  >
+                    📥 Sao Lưu (Backup JSON)
+                  </button>
+                </div>
               </div>
 
               <div className="overflow-x-auto">

@@ -3,7 +3,7 @@ import { getSettings, saveSettings } from '@/lib/store';
 
 // GET /api/settings
 export async function GET() {
-  const settings = getSettings();
+  const settings = await getSettings();
   return NextResponse.json(settings);
 }
 
@@ -11,11 +11,10 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const current = getSettings();
+    const current = await getSettings();
 
-    // Xác thực admin pin nếu có truyền vào
     if (body.currentPin && body.currentPin !== current.adminPin) {
-      return NextResponse.json({ error: 'Mật mã cõi thiên sai lệch!' }, { status: 403 });
+      return NextResponse.json({ error: 'Mật mã sai lệch!' }, { status: 403 });
     }
 
     const updated = {
@@ -30,10 +29,10 @@ export async function POST(request: Request) {
       adminPin: body.newPin ? body.newPin : current.adminPin
     };
 
-    saveSettings(updated);
+    await saveSettings(updated);
     return NextResponse.json({ success: true, settings: updated });
   } catch (error) {
     console.error('Error in POST /api/settings:', error);
-    return NextResponse.json({ error: 'Lỗi cập nhật thiên giới' }, { status: 500 });
+    return NextResponse.json({ error: 'Lỗi cập nhật cài đặt' }, { status: 500 });
   }
 }

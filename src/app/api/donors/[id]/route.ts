@@ -17,7 +17,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const donors = getDonors();
+    const donors = await getDonors();
     const index = donors.findIndex(d => d.id === id);
 
     if (index === -1) {
@@ -42,11 +42,11 @@ export async function PUT(
       blessingsCount: body.blessingsCount !== undefined ? Number(body.blessingsCount) : current.blessingsCount,
     };
 
-    saveDonors(donors);
+    await saveDonors(donors);
 
-    const settings = getSettings();
+    const settings = await getSettings();
     settings.currentTotal = donors.filter(d => !d.hidden).reduce((sum, d) => sum + d.amount, 0);
-    saveSettings(settings);
+    await saveSettings(settings);
 
     return NextResponse.json({ success: true, donor: donors[index] });
   } catch (error) {
@@ -61,18 +61,18 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const donors = getDonors();
+    const donors = await getDonors();
     const filtered = donors.filter(d => d.id !== id);
 
     if (filtered.length === donors.length) {
       return NextResponse.json({ error: 'Không tìm thấy người xem để xoá' }, { status: 404 });
     }
 
-    saveDonors(filtered);
+    await saveDonors(filtered);
 
-    const settings = getSettings();
+    const settings = await getSettings();
     settings.currentTotal = filtered.filter(d => !d.hidden).reduce((sum, d) => sum + d.amount, 0);
-    saveSettings(settings);
+    await saveSettings(settings);
 
     return NextResponse.json({ success: true, message: 'Đã xoá thành công' });
   } catch (error) {

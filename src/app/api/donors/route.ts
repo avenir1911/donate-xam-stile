@@ -22,7 +22,7 @@ function getDefaultTitle(tier: TierLevel): string {
 
 // GET /api/donors
 export async function GET() {
-  const donors = getDonors();
+  const donors = await getDonors();
   const sorted = [...donors].sort((a, b) => b.amount - a.amount);
   return NextResponse.json(sorted);
 }
@@ -32,13 +32,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Hành động thắp nến / trừ tà (+1 can đảm)
+    // Hành động trừ tà (+1 can đảm)
     if (body.action === 'bless' && body.id) {
-      const donors = getDonors();
+      const donors = await getDonors();
       const donor = donors.find(d => d.id === body.id);
       if (donor) {
         donor.blessingsCount = (donor.blessingsCount || 0) + 1;
-        saveDonors(donors);
+        await saveDonors(donors);
         return NextResponse.json({ success: true, blessingsCount: donor.blessingsCount });
       }
       return NextResponse.json({ error: 'Không tìm thấy người xem' }, { status: 404 });
@@ -66,14 +66,14 @@ export async function POST(request: Request) {
       blessingsCount: 0
     };
 
-    const donors = getDonors();
+    const donors = await getDonors();
     donors.unshift(newDonor);
-    saveDonors(donors);
+    await saveDonors(donors);
 
     // Cập nhật tổng tiền trong settings
-    const settings = getSettings();
+    const settings = await getSettings();
     settings.currentTotal = donors.filter(d => !d.hidden).reduce((sum, d) => sum + d.amount, 0);
-    saveSettings(settings);
+    await saveSettings(settings);
 
     return NextResponse.json({ success: true, donor: newDonor }, { status: 201 });
   } catch (error) {
