@@ -22,9 +22,9 @@ export default function DonateModal({ isOpen, onClose, settings }: DonateModalPr
   };
 
   const bank = settings.bankAccount || {
-    bankName: 'MB Bank',
-    accountNumber: '0987654321',
-    accountHolder: 'TRAN TRUONG TON',
+    bankName: 'Vietcombank (VCB)',
+    accountNumber: '1050043488',
+    accountHolder: 'DO DUY KHANG',
   };
 
   return (
@@ -54,7 +54,7 @@ export default function DonateModal({ isOpen, onClose, settings }: DonateModalPr
         <div className="my-5 flex flex-col items-center">
           <div className="p-3 bg-white rounded-xl shadow-lg border-4 border-red-600 relative group">
             <img
-              src={settings.qrCodeUrl || `https://api.vietqr.io/image/970422-${bank.accountNumber}-compact.jpg?amount=50000&addInfo=DONATE%20XAM%20STILE`}
+              src={settings.qrCodeUrl || `https://api.vietqr.io/image/VCB-${bank.accountNumber}-compact2.jpg?accountName=${encodeURIComponent(bank.accountHolder)}&addInfo=DONATE%20XAM%20STILE`}
               alt="Mã QR Donate"
               className="w-48 h-48 object-contain rounded-lg"
             />

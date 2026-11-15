@@ -157,6 +157,12 @@ export async function getSettings(): Promise<WebSettings> {
         templeFundGoal: 20000000,
         currentTotal: 0,
         adminPin: 'tamlinh68',
+        qrCodeUrl: 'https://api.vietqr.io/image/VCB-1050043488-compact2.jpg?accountName=DO%20DUY%20KHANG&addInfo=DONATE%20XAM%20STILE',
+        bankAccount: {
+          bankName: 'Vietcombank (VCB)',
+          accountNumber: '1050043488',
+          accountHolder: 'DO DUY KHANG'
+        }
       };
     }
     const data = fs.readFileSync(targetFile, 'utf-8');
