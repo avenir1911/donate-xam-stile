@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #050406;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #e4e4e7;
+  font-family: 'Playfair Display', 'Lora', Georgia, serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(220, 38, 38, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(127, 29, 29, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(234, 88, 12, 0.08) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar Đỏ Đen */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080509;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b1118;
+  border-radius: 4px;
+  border: 1px solid #501724;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #dc2626;
+}
+
+/* Viền Đỏ Máu & Glow */
+.blood-border {
+  border: 1px solid #dc2626;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.3), inset 0 0 10px rgba(220, 38, 38, 0.15);
+}
+
+.blood-glow {
+  filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.7));
+}
+
+.brush-title {
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.8), 0 2px 4px rgba(0,0,0,0.9);
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "donor-1",
+    "name": "Bạch Thiển Ma Vương",
+    "amount": 5000000,
+    "message": "Gửi Xám 5 củ bồi dưỡng thức đêm dựng video. Tập nhà hoang tuần trước nghe lúc 2h sáng lạnh cả sống lưng!",
+    "title": "Chúa Tể Cõi Âm",
+    "tier": "chua-te",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=BachThienMa",
+    "date": "2026-11-14",
+    "highlight": true,
+    "hidden": false,
+    "blessingsCount": 108
+  },
+  {
+    "id": "donor-2",
+    "name": "Pháp Sư Trừ Tà 9x",
+    "amount": 2500000,
+    "message": "Ủng hộ kênh 2 củ rưỡi. Nghe giọng Xám dẫn truyện cuốn dã man, mong kênh sớm đạt Nút Vàng!",
+    "title": "Pháp Sư Bắt Ma",
+    "tier": "phap-su",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=PhapSuTruTa",
+    "date": "2026-11-13",
+    "highlight": true,
+    "hidden": false,
+    "blessingsCount": 88
+  },
+  {
+    "id": "donor-3",
+    "name": "Cú Đêm Mê Kinh Dị",
+    "amount": 1500000,
+    "message": "Donate chút tiền cà phê cho Xám. Nhớ ra thêm mấy vụ án tâm linh có thật ở Việt Nam nha bro.",
+    "title": "Pháp Sư Bắt Ma",
+    "tier": "phap-su",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=CuDemKinhDi",
+    "date": "2026-11-12",
+    "highlight": true,
+    "hidden": false,
+    "blessingsCount": 66
+  },
+  {
+    "id": "donor-4",
+    "name": "Bóng Ma Không Đầu",
+    "amount": 888000,
+    "message": "Vừa bật đèn nghe truyện vừa run nhưng vẫn nghiện. Cầu cho không bị vong theo!",
+    "title": "Thầy Trừ Tà",
+    "tier": "tru-ta",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=BongMaKhongDau",
+    "date": "2026-11-10",
+    "highlight": false,
+    "hidden": false,
+    "blessingsCount": 49
+  },
+  {
+    "id": "donor-5",
+    "name": "Mèo Đen Bắt Chuột",
+    "amount": 350000,
+    "message": "Ủng hộ kênh phát triển mạnh mẽ. Video chất lượng từ âm thanh đến hình ảnh minh họa.",
+    "title": "Người Đi Đêm",
+    "tier": "nguoi-di-dem",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=MeoDenBatChuot",
+    "date": "2026-11-08",
+    "highlight": false,
+    "hidden": false,
+    "blessingsCount": 33
+  },
+  {
+    "id": "donor-6",
+    "name": "Khán Giả Giấu Tên",
+    "amount": 100000,
+    "message": "Chúc anh Xám và team luôn bình an, ra video đều tay!",
+    "title": "Khách Nghe Truyện",
+    "tier": "khanh-thinh",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=KhanGiaGiauTen",
+    "date": "2026-11-05",
+    "highlight": false,
+    "hidden": false,
+    "blessingsCount": 77
+  }
+]
