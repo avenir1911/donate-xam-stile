@@ -85,11 +85,14 @@ export default function DonateModal({ isOpen, onClose, settings }: DonateModalPr
             <span className="text-zinc-400">Chủ Tài Khoản:</span>
             <span className="font-bold text-zinc-200 uppercase">{bank.accountHolder}</span>
           </div>
-          <div className="flex justify-between items-center pt-1 border-t border-zinc-800">
-            <span className="text-zinc-400">Nội Dung:</span>
-            <span className="font-mono text-red-300 text-[11px] bg-red-950/60 px-2 py-0.5 rounded border border-red-800/60">
-              [TenBan] Donate Xam Stile
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-1 pt-1 border-t border-zinc-800">
+            <span className="text-zinc-400">Nội Dung CK:</span>
+            <span className="font-mono text-red-300 text-[11px] bg-red-950/60 px-2 py-0.5 rounded border border-red-800/60 text-right truncate">
+              [Tên Bạn / Biệt danh] | [Lời nhắn]
             </span>
+          </div>
+          <div className="text-[10px] text-zinc-500 italic text-right">
+            VD: CuDem9x | Chuc Xam ra video deu tay
           </div>
         </div>
 
