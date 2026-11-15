@@ -90,7 +90,9 @@ export default function HomePage() {
     }
   };
 
-  const topThree = donors.filter((d) => !d.hidden).slice(0, 3);
+  const activeDonors = donors.filter((d) => !d.hidden);
+  const actualTotal = activeDonors.reduce((sum, d) => sum + d.amount, 0);
+  const topThree = activeDonors.slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
@@ -103,7 +105,8 @@ export default function HomePage() {
 
         <Hero
           settings={settings}
-          totalDonors={donors.filter((d) => !d.hidden).length}
+          totalDonors={activeDonors.length}
+          currentTotal={actualTotal}
           onOpenDonate={() => setIsDonateOpen(true)}
         />
 

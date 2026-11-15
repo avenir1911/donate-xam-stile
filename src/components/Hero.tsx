@@ -9,11 +9,14 @@ import { WebSettings } from '@/lib/types';
 interface HeroProps {
   settings: WebSettings;
   totalDonors: number;
+  currentTotal?: number;
   onOpenDonate: () => void;
 }
 
-export default function Hero({ settings, totalDonors, onOpenDonate }: HeroProps) {
-  const percent = Math.min(100, Math.round((settings.currentTotal / settings.templeFundGoal) * 100));
+export default function Hero({ settings, totalDonors, currentTotal, onOpenDonate }: HeroProps) {
+  const actualTotal = currentTotal !== undefined ? currentTotal : settings.currentTotal;
+  const goal = settings.templeFundGoal > 0 ? settings.templeFundGoal : 20000000;
+  const percent = Math.min(100, Math.round((actualTotal / goal) * 100));
 
   return (
     <section className="relative pt-4 pb-10 overflow-hidden text-center">
@@ -69,7 +72,7 @@ export default function Hero({ settings, totalDonors, onOpenDonate }: HeroProps)
               Tổng Linh Thạch Tiếp Sức:
             </span>
             <span className="text-red-400 font-bold font-mono text-base">
-              {settings.currentTotal.toLocaleString('vi-VN')} đ
+              {actualTotal.toLocaleString('vi-VN')} đ
             </span>
           </div>
 
